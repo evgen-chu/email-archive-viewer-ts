@@ -1,5 +1,11 @@
+import BrowsePage from "./BrowsePage";
+
 function App() {
-  return <div className="App"></div>;
+  return (
+    <div>
+      <BrowsePage />
+    </div>
+  );
 }
 
 export default App;

@@ -1,17 +1,29 @@
 import React, { useEffect, useState, useContext } from "react";
 import styled from "styled-components";
-import { searchForSender } from "./jsonStorage";
+import { searchForSender, searchForReceiver } from "./jsonStorage";
 import { AppContext } from "./AppContext";
 
-const FilterBySender = () => {
-  const { sender, setSender, setPage } = useContext(AppContext);
+const FilterBySender = ({ type }) => {
+  const {
+    sender,
+    setSender,
+    setPage,
+    searchResult,
+    setSearchResult,
+    receiver,
+    setReceiver,
+  } = useContext(AppContext);
   const [searchTerm, setSearchTerm] = useState("");
-  const [searchResult, setSearchResult] = useState("");
   const [suggestionsVisibility, setSuggestionsVisibility] = useState(false);
-  //const [sender, setSender] = useState(null);
+  let isSender = type === "sender";
+
   useEffect(() => {
-    if (searchTerm.length > 0) {
+    if (searchTerm.length > 0 && type === "sender") {
       let temp = searchForSender(searchTerm);
+      setSearchResult(temp);
+    }
+    if (searchTerm.length > 0 && type === "receiver") {
+      let temp = searchForReceiver(searchTerm);
       setSearchResult(temp);
     }
   }, [searchTerm]);
@@ -19,19 +31,20 @@ const FilterBySender = () => {
     <Wrapper>
       <input
         type="text"
-        placeholder="sender"
+        placeholder={type === "sender" ? "sender" : "receiver"}
         value={searchTerm}
         onChange={(e) => {
           setSearchTerm(e.target.value);
           setSuggestionsVisibility(true);
         }}
       />
-      {sender && (
+      {((sender && isSender) || (receiver && !isSender)) && (
         <SenderWrapper>
-          <Sender>{sender}</Sender>
+          <Sender>{isSender ? sender : receiver}</Sender>
           <button
             onClick={(e) => {
-              setSender(null);
+              if (isSender) setSender(null);
+              if (!isSender) setReceiver(null);
               setPage(1);
             }}
           >
@@ -48,7 +61,8 @@ const FilterBySender = () => {
                   onClick={(e) => {
                     setSearchTerm("");
                     setSuggestionsVisibility(false);
-                    setSender(item);
+                    if (isSender) setSender(item);
+                    if (!isSender) setReceiver(item);
                     setPage(1);
                   }}
                 >

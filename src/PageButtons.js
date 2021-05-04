@@ -3,12 +3,12 @@ import styled from "styled-components";
 import { getEmails } from "./jsonStorage";
 import { AppContext } from "./AppContext";
 const PageButtons = () => {
-  const { page, setPage, sender } = useContext(AppContext);
+  const { page, setPage, sender, receiver } = useContext(AppContext);
   const [nextPage, setNextPage] = useState(true);
   useEffect(() => {
-    let items = getEmails(page + 1, 20, sender);
+    let items = getEmails(page + 1, 20, sender, receiver);
     items.length === 0 ? setNextPage(false) : setNextPage(true);
-  }, [page, sender]);
+  }, [page, sender, receiver]);
   return (
     <Wrapper>
       <button

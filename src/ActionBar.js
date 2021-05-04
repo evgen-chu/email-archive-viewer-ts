@@ -1,19 +1,19 @@
 import React from "react";
 import styled from "styled-components";
-import { getAllSenders } from "./jsonStorage";
 import FilterBySender from "./FilterBySender";
 
-const ActionBar = ({ sender, setSender }) => {
+const ActionBar = () => {
   return (
     <Wrapper>
       <div>
         <label>Filter by Sender:</label>
         {/* <input type="text" /> */}
-        <FilterBySender sender={sender} setSender={setSender} />
+        <FilterBySender type="sender" />
       </div>
       <div>
         <label>Filter by Receiver:</label>
-        <input type="text" />
+        {/* <input type="text" /> */}
+        <FilterBySender type="receiver" />
       </div>
 
       <input type="text" placeholder="Search" />

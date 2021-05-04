@@ -3,9 +3,8 @@ const emails = require("./assets/email.json");
 //get paginated result
 export const getEmails = (page, limit) => {
   const startInd = (page - 1) * limit;
-  const endInd = limit;
+  const endInd = page * limit - 1;
   let result = emails.slice(startInd, endInd);
-  console.log(result[0].from);
   return result;
 };
 

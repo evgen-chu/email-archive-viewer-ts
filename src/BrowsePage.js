@@ -7,12 +7,14 @@ import { AppContext } from "./AppContext";
 import styled from "styled-components";
 
 const BrowsePage = () => {
-  const { sender, setSender, page, receiver } = useContext(AppContext);
+  const { sender, setSender, page, receiver, searchText } = useContext(
+    AppContext
+  );
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    setItems(getEmails(page, 20, sender, receiver));
-  }, [page, sender, receiver]);
+    setItems(getEmails(page, 20, sender, receiver, searchText));
+  }, [page, sender, receiver, searchText]);
 
   return (
     <Wrapper>

@@ -1,22 +1,20 @@
 import React from "react";
 import styled from "styled-components";
-import FilterBySender from "./FilterBySender";
+import Filter from "./Filter";
 
 const ActionBar = () => {
   return (
     <Wrapper>
       <div>
         <label>Filter by Sender:</label>
-        {/* <input type="text" /> */}
-        <FilterBySender type="sender" />
+        <Filter type="sender" />
       </div>
       <div>
         <label>Filter by Receiver:</label>
-        {/* <input type="text" /> */}
-        <FilterBySender type="receiver" />
+        <Filter type="receiver" />
       </div>
 
-      <input type="text" placeholder="Search" />
+      <Filter type="text-search" />
     </Wrapper>
   );
 };

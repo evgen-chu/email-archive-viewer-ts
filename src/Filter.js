@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { searchForSender, searchForReceiver } from "./jsonStorage";
 import { AppContext } from "./AppContext";
 
-const FilterBySender = ({ type }) => {
+const Filter = ({ type }) => {
   const {
     sender,
     setSender,
@@ -12,10 +12,11 @@ const FilterBySender = ({ type }) => {
     setSearchResult,
     receiver,
     setReceiver,
+    setSearchText,
   } = useContext(AppContext);
   const [searchTerm, setSearchTerm] = useState("");
   const [suggestionsVisibility, setSuggestionsVisibility] = useState(false);
-  let isSender = type === "sender";
+  // let isSender = type === "sender";
 
   useEffect(() => {
     if (searchTerm.length > 0 && type === "sender") {
@@ -31,20 +32,27 @@ const FilterBySender = ({ type }) => {
     <Wrapper>
       <input
         type="text"
-        placeholder={type === "sender" ? "sender" : "receiver"}
+        placeholder={
+          type === "sender"
+            ? "sender"
+            : type === "receiver"
+            ? "receiver"
+            : "search"
+        }
         value={searchTerm}
         onChange={(e) => {
           setSearchTerm(e.target.value);
+          if (type === "text-search") setSearchText(e.target.value);
           setSuggestionsVisibility(true);
         }}
       />
-      {((sender && isSender) || (receiver && !isSender)) && (
+      {((sender && type === "sender") || (receiver && type === "receiver")) && (
         <SenderWrapper>
-          <Sender>{isSender ? sender : receiver}</Sender>
+          <Sender>{type === "sender" ? sender : receiver}</Sender>
           <button
             onClick={(e) => {
-              if (isSender) setSender(null);
-              if (!isSender) setReceiver(null);
+              if (type === "sender") setSender(null);
+              if (type === "receiver") setReceiver(null);
               setPage(1);
             }}
           >
@@ -52,7 +60,7 @@ const FilterBySender = ({ type }) => {
           </button>
         </SenderWrapper>
       )}
-      {searchResult.length > 0 && (
+      {searchResult.length > 0 && type !== "text-search" && (
         <Suggestions suggestionsVisibility={suggestionsVisibility}>
           <ul>
             {searchResult.map((item) => {
@@ -61,8 +69,8 @@ const FilterBySender = ({ type }) => {
                   onClick={(e) => {
                     setSearchTerm("");
                     setSuggestionsVisibility(false);
-                    if (isSender) setSender(item);
-                    if (!isSender) setReceiver(item);
+                    if (type === "sender") setSender(item);
+                    if (type === "receiver") setReceiver(item);
                     setPage(1);
                   }}
                 >
@@ -98,4 +106,4 @@ const SenderWrapper = styled.div`
   display: flex;
 `;
 
-export default FilterBySender;
+export default Filter;

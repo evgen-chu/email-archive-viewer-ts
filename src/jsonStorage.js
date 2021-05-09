@@ -1,6 +1,9 @@
-const emails = require("./assets/email.json");
-
+//const emails = require("./assets/email.json");
+const emails = require("./assets/emailWithID.json");
 //get paginated result
+export const getEmailById = (id) => {
+  return emails.filter((item) => item.id === id)[0];
+};
 export const getEmails = (page, limit, sender, receiver, searchText) => {
   let result;
   if (sender) {

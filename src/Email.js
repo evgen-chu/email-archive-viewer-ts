@@ -1,31 +1,59 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useParams } from "react-router";
 import { getEmailById } from "./jsonStorage";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { AppContext } from "./AppContext";
+import { VscChromeClose } from "react-icons/vsc";
 
 const Email = () => {
-  const { emailId } = useParams();
-  const item = getEmailById(emailId);
+  const { chosenEmail, setChosenEmail, setResize } = useContext(AppContext);
+  // const { emailId } = useParams();
+  //const item = getEmailById(emailId);
   return (
-    <Wrapper>
-      <Link to="/">Back to archive</Link>
-      <div>From: {item.from}</div>
-      <div> {item.date}</div>
-      <div>To: {item.to}</div>
-      <div>CC: {item.cc}</div>
-      <div>BCC: {item.bcc}</div>
-      <div>Subject: {item.subject}</div>
-      <div>{item.body} </div>
+    <Wrapper alignLeft={chosenEmail === null}>
+      {/* <Link to="/">Back to archive</Link> */}
+      <ExitButton
+        onClick={(e) => {
+          setChosenEmail(null);
+          setResize(false);
+        }}
+      >
+        <VscChromeClose />
+      </ExitButton>
+      <div>From: {chosenEmail.from}</div>
+      <div> {chosenEmail.date}</div>
+      <div>To: {chosenEmail.to}</div>
+      <div>CC: {chosenEmail.cc}</div>
+      <div>BCC: {chosenEmail.bcc}</div>
+      <div>Subject: {chosenEmail.subject}</div>
+      <div>{chosenEmail.body} </div>
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
-  width: 60%;
+  width: 40vw;
+  height: 100vh;
   margin: auto;
+  background-color: #f8f9fa;
   display: flex;
   flex-direction: column;
+  position: relative;
+  border-left: 1px solid rgba(0, 0, 0, 0.5);
+  padding: 20px;
+`;
+const ExitButton = styled.button`
+  background-color: white;
+  width: 30px;
+  position: absolute;
+  top: 2%;
+  left: 93%;
+  border-radius: 5px;
+  border: none;
+  &:hover {
+    border: 1px gray solid;
+  }
 `;
 
 export default Email;

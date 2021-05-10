@@ -9,6 +9,8 @@ const AppProvider = ({ children }) => {
   const [page, setPage] = useState(1);
   const [searchResult, setSearchResult] = useState([]);
   const [searchText, setSearchText] = useState("");
+  const [chosenEmail, setChosenEmail] = useState(null);
+  const [resize, setResize] = useState(false);
   return (
     <AppContext.Provider
       value={{
@@ -22,6 +24,10 @@ const AppProvider = ({ children }) => {
         setSearchResult,
         searchText,
         setSearchText,
+        chosenEmail,
+        setChosenEmail,
+        resize,
+        setResize,
       }}
     >
       {children}

@@ -1,17 +1,34 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import moment from "moment";
 import { AppContext } from "./AppContext";
 
 const EmailPreview = ({ item }) => {
-  const { searchText } = useContext(AppContext);
-  const itemSplit = item.body.slice(0, 100).split(searchText);
+  const {
+    searchText,
+    chosenEmail,
+    setChosenEmail,
+    resize,
+    setResize,
+  } = useContext(AppContext);
+  const itemSplit =
+    searchText !== ""
+      ? item.body.slice(0, 150).split(searchText)
+      : item.body.slice(0, 150);
+
   return (
-    <Wrapper to={`/emails/${item.id}`}>
-      <div>{item.from}</div>
+    <Wrapper
+      resize={false}
+      style={{ width: resize ? "60vw" : "100vw" }}
+      onClick={(e) => {
+        setChosenEmail(item);
+        setResize(true);
+      }}
+    >
+      <div className="name">{item.from.split("@")[0]}</div>
       <div id="email-body">
-        {itemSplit.length > 1 ? (
+        {Array.isArray(itemSplit) ? (
           itemSplit.map((item, index) => {
             if (index === itemSplit.length - 1) return <span>{item}</span>;
             else
@@ -23,7 +40,7 @@ const EmailPreview = ({ item }) => {
               );
           })
         ) : (
-          <span>{itemSplit[0]}</span>
+          <span>{itemSplit}</span>
         )}
       </div>
       <div> {moment(item.date).format("LL")}</div>
@@ -31,15 +48,29 @@ const EmailPreview = ({ item }) => {
   );
 };
 
-const Wrapper = styled(Link)`
-  width: 60%;
+const Wrapper = styled.button`
+  //width: 100vw;
+  width: ${(props) => (props.resize ? "50vw" : "100vw")};
   margin: auto;
   display: flex;
   justify-content: space-between;
   text-decoration: none;
   color: black;
+  height: 40px;
+  align-items: center;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  font-size: 12pt;
+  background-color: #f8f9fa;
+  border: none;
+  .name {
+    margin-right: 40px;
+  }
+  &:hover {
+    background-color: #dee2e6;
+  }
 `;
 const SearchTerm = styled.span`
   font-weight: bold;
+  background-color: yellow;
 `;
 export default EmailPreview;

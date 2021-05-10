@@ -6,11 +6,11 @@ const ActionBar = () => {
   return (
     <Wrapper>
       <div>
-        <label>Filter by Sender:</label>
+        <label>Sender:</label>
         <Filter type="sender" />
       </div>
       <div>
-        <label>Filter by Receiver:</label>
+        <label>Receiver:</label>
         <Filter type="receiver" />
       </div>
 
@@ -20,15 +20,21 @@ const ActionBar = () => {
 };
 
 const Wrapper = styled.div`
-  width: 60%;
+  width: 80%;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
+  align-items: center;
   margin: auto;
+  margin-top: 20px;
   div {
     display: flex;
   }
   input {
     height: 20px;
+  }
+  label {
+    margin: auto;
+    margin-right: 10px;
   }
 `;
 

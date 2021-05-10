@@ -88,6 +88,10 @@ const Wrapper = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
+  input {
+    height: 25px;
+    border-radius: 4px;
+  }
 `;
 const Suggestions = styled.div`
   background-color: #fff;

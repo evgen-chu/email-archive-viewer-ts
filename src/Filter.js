@@ -2,6 +2,9 @@ import React, { useEffect, useState, useContext } from "react";
 import styled from "styled-components";
 import { searchForSender, searchForReceiver } from "./jsonStorage";
 import { AppContext } from "./AppContext";
+import InputLabel from "@material-ui/core/InputLabel";
+import OutlinedInput from "@material-ui/core/OutlinedInput";
+import FormControl from "@material-ui/core/FormControl";
 
 const Filter = ({ type }) => {
   const {
@@ -30,22 +33,25 @@ const Filter = ({ type }) => {
   }, [searchTerm]);
   return (
     <Wrapper>
-      <input
-        type="text"
-        placeholder={
-          type === "sender"
-            ? "sender"
+      <FormControl variant="outlined">
+        <InputLabel htmlFor="component-outlined">
+          {type === "sender"
+            ? "Sender"
             : type === "receiver"
-            ? "receiver"
-            : "search"
-        }
-        value={searchTerm}
-        onChange={(e) => {
-          setSearchTerm(e.target.value);
-          if (type === "text-search") setSearchText(e.target.value);
-          setSuggestionsVisibility(true);
-        }}
-      />
+            ? "Receiver"
+            : "Search"}
+        </InputLabel>
+        <OutlinedInput
+          id="component-outlined"
+          value={searchTerm}
+          onChange={(e) => {
+            setSearchTerm(e.target.value);
+            if (type === "text-search") setSearchText(e.target.value);
+            setSuggestionsVisibility(true);
+          }}
+          label="Sender"
+        />
+      </FormControl>
       {((sender && type === "sender") || (receiver && type === "receiver")) && (
         <SenderWrapper>
           <Sender>{type === "sender" ? sender : receiver}</Sender>
@@ -88,10 +94,10 @@ const Wrapper = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  input {
-    height: 25px;
-    border-radius: 4px;
-  }
+  // input {
+  //   height: 25px;
+  //   border-radius: 4px;
+  // }
 `;
 const Suggestions = styled.div`
   background-color: #fff;

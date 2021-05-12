@@ -7,9 +7,14 @@ import { AppContext } from "./AppContext";
 import { VscChromeClose } from "react-icons/vsc";
 
 const Email = () => {
-  const { chosenEmail, setChosenEmail, setResize } = useContext(AppContext);
+  const { chosenEmail, setChosenEmail, setResize, searchText } = useContext(
+    AppContext
+  );
   // const { emailId } = useParams();
   //const item = getEmailById(emailId);
+  const textSplit =
+    searchText !== "" ? chosenEmail.body.split(searchText) : chosenEmail.body;
+
   return (
     <Wrapper alignLeft={chosenEmail === null}>
       {/* <Link to="/">Back to archive</Link> */}
@@ -27,7 +32,22 @@ const Email = () => {
       <div>CC: {chosenEmail.cc}</div>
       <div>BCC: {chosenEmail.bcc}</div>
       <div>Subject: {chosenEmail.subject}</div>
-      <div>{chosenEmail.body} </div>
+      <div>
+        {Array.isArray(textSplit) ? (
+          textSplit.map((item, index) => {
+            if (index === textSplit.length - 1) return <span>{item}</span>;
+            else
+              return (
+                <span>
+                  {item}
+                  <SearchTerm>{searchText}</SearchTerm>
+                </span>
+              );
+          })
+        ) : (
+          <span>{textSplit}</span>
+        )}
+      </div>
     </Wrapper>
   );
 };
@@ -54,6 +74,10 @@ const ExitButton = styled.button`
   &:hover {
     border: 1px gray solid;
   }
+`;
+const SearchTerm = styled.span`
+  font-weight: bold;
+  background-color: yellow;
 `;
 
 export default Email;

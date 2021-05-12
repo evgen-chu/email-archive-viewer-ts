@@ -4,7 +4,25 @@ import styled from "styled-components";
 import moment from "moment";
 import { AppContext } from "./AppContext";
 
+import ListItem from "@material-ui/core/ListItem";
+
+import Typography from "@material-ui/core/Typography";
+import ListItemText from "@material-ui/core/ListItemText";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width: "100%",
+    maxWidth: "36ch",
+    backgroundColor: theme.palette.background.paper,
+  },
+  inline: {
+    display: "inline",
+  },
+}));
+
 const EmailPreview = ({ item }) => {
+  const classes = useStyles();
   const {
     searchText,
     chosenEmail,
@@ -18,7 +36,8 @@ const EmailPreview = ({ item }) => {
       : item.body.slice(0, 150);
 
   return (
-    <Wrapper
+    <ListItemMoved
+      alignItems="flex-start"
       resize={false}
       style={{ width: resize ? "60vw" : "100vw" }}
       onClick={(e) => {
@@ -26,7 +45,7 @@ const EmailPreview = ({ item }) => {
         setResize(true);
       }}
     >
-      <div className="name">{item.from.split("@")[0]}</div>
+      {/* <div className="name">{item.from.split("@")[0]}</div>
       <div id="email-body">
         {Array.isArray(itemSplit) ? (
           itemSplit.map((item, index) => {
@@ -43,8 +62,38 @@ const EmailPreview = ({ item }) => {
           <span>{itemSplit}</span>
         )}
       </div>
-      <div> {moment(item.date).format("LL")}</div>
-    </Wrapper>
+      <div> {moment(item.date).format("LL")}</div> */}
+
+      <ListItemText
+        primary={item.from.split("@")[0]}
+        secondary={
+          <React.Fragment>
+            <Typography
+              component="span"
+              variant="body2"
+              className={classes.inline}
+              color="textPrimary"
+            >
+              {item.subject}
+            </Typography>
+            {Array.isArray(itemSplit) ? (
+              itemSplit.map((item, index) => {
+                if (index === itemSplit.length - 1) return <span>{item}</span>;
+                else
+                  return (
+                    <span>
+                      {item}
+                      <SearchTerm>{searchText}</SearchTerm>
+                    </span>
+                  );
+              })
+            ) : (
+              <span>{itemSplit}</span>
+            )}
+          </React.Fragment>
+        }
+      />
+    </ListItemMoved>
   );
 };
 
@@ -72,5 +121,9 @@ const Wrapper = styled.button`
 const SearchTerm = styled.span`
   font-weight: bold;
   background-color: yellow;
+`;
+
+const ListItemMoved = styled(ListItem)`
+  margin-left: 50px;
 `;
 export default EmailPreview;

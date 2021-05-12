@@ -21,7 +21,7 @@ const BrowsePage = () => {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    setItems(getEmails(page, 20, sender, receiver, searchText));
+    setItems(getEmails(page, 10, sender, receiver, searchText));
   }, [page, sender, receiver, searchText, chosenEmail]);
 
   return (

@@ -5,6 +5,7 @@ import { AppContext } from "./AppContext";
 import InputLabel from "@material-ui/core/InputLabel";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 import FormControl from "@material-ui/core/FormControl";
+import Chip from "@material-ui/core/Chip";
 
 const Filter = ({ type }) => {
   const {
@@ -31,6 +32,11 @@ const Filter = ({ type }) => {
       setSearchResult(temp);
     }
   }, [searchTerm]);
+  const handleDelete = () => {
+    if (type === "sender") setSender(null);
+    if (type === "receiver") setReceiver(null);
+    setPage(1);
+  };
   return (
     <Wrapper>
       <FormControl variant="outlined">
@@ -53,18 +59,25 @@ const Filter = ({ type }) => {
         />
       </FormControl>
       {((sender && type === "sender") || (receiver && type === "receiver")) && (
-        <SenderWrapper>
-          <Sender>{type === "sender" ? sender : receiver}</Sender>
-          <button
-            onClick={(e) => {
-              if (type === "sender") setSender(null);
-              if (type === "receiver") setReceiver(null);
-              setPage(1);
-            }}
-          >
-            X
-          </button>
-        </SenderWrapper>
+        // <SenderWrapper>
+        //   <Sender>{type === "sender" ? sender : receiver}</Sender>
+        //   <button
+        //     onClick={(e) => {
+        //       if (type === "sender") setSender(null);
+        //       if (type === "receiver") setReceiver(null);
+        //       setPage(1);
+        //     }}
+        //   >
+        //     X
+        //   </button>
+        // </SenderWrapper>
+        <Chip
+          variant="outlined"
+          size="small"
+          label={type === "sender" ? sender : receiver}
+          onDelete={handleDelete}
+          color="primary"
+        />
       )}
       {searchResult.length > 0 && type !== "text-search" && (
         <Suggestions suggestionsVisibility={suggestionsVisibility}>

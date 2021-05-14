@@ -5,15 +5,10 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { AppContext } from "./AppContext";
 import { VscChromeClose } from "react-icons/vsc";
-
+import { applyHighlight } from "./EmailPreview";
 const Email = () => {
-  const { chosenEmail, setChosenEmail, setResize, searchText } = useContext(
-    AppContext
-  );
-  // const { emailId } = useParams();
-  //const item = getEmailById(emailId);
-  const textSplit =
-    searchText !== "" ? chosenEmail.body.split(searchText) : chosenEmail.body;
+  const { chosenEmail, setChosenEmail, setResize, searchText } =
+    useContext(AppContext);
 
   return (
     <Wrapper alignLeft={chosenEmail === null}>
@@ -32,22 +27,11 @@ const Email = () => {
       <div>CC: {chosenEmail.cc}</div>
       <div>BCC: {chosenEmail.bcc}</div>
       <div>Subject: {chosenEmail.subject}</div>
-      <div>
-        {Array.isArray(textSplit) ? (
-          textSplit.map((item, index) => {
-            if (index === textSplit.length - 1) return <span>{item}</span>;
-            else
-              return (
-                <span>
-                  {item}
-                  <SearchTerm>{searchText}</SearchTerm>
-                </span>
-              );
-          })
-        ) : (
-          <span>{textSplit}</span>
-        )}
-      </div>
+      <div
+        dangerouslySetInnerHTML={{
+          __html: applyHighlight(searchText, chosenEmail.body),
+        }}
+      ></div>
     </Wrapper>
   );
 };

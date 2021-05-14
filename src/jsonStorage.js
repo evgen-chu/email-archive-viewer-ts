@@ -67,3 +67,22 @@ export const searchForReceiver = (searchTerm) => {
   });
   return result;
 };
+
+export const highlight = (searchStr, str) => {
+  let searchStrLen = searchStr.length;
+  if (searchStrLen === 0) {
+    return [];
+  }
+  let startIndex = 0,
+    index,
+    indices = [];
+  str = str.toLowerCase();
+  searchStr = searchStr.toLowerCase();
+
+  while (str.indexOf(searchStr, startIndex) > -1) {
+    index = str.indexOf(searchStr, startIndex);
+    indices.push({ start: index, end: index + searchStrLen - 1 });
+    startIndex = index + searchStrLen;
+  }
+  return indices;
+};

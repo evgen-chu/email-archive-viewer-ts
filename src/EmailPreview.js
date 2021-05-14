@@ -9,6 +9,7 @@ import ListItem from "@material-ui/core/ListItem";
 import Typography from "@material-ui/core/Typography";
 import ListItemText from "@material-ui/core/ListItemText";
 import { makeStyles } from "@material-ui/core/styles";
+import { highlight } from "./jsonStorage";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,19 +22,32 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+export const applyHighlight = (term, text) => {
+  let indices = highlight(term, text);
+  console.log(indices);
+  let tagsLength = 0;
+  let counter = 0;
+  while (counter < indices.length) {
+    text =
+      text.slice(0, indices[counter].start + tagsLength) +
+      "<strong>" +
+      text.slice(
+        indices[counter].start + tagsLength,
+        indices[counter].end + tagsLength + 1
+      ) +
+      "</strong>" +
+      text.slice(indices[counter].end + tagsLength + 1, text.length);
+    tagsLength += 17;
+    console.log(text);
+    counter++;
+  }
+  return text;
+};
+
 const EmailPreview = ({ item }) => {
   const classes = useStyles();
-  const {
-    searchText,
-    chosenEmail,
-    setChosenEmail,
-    resize,
-    setResize,
-  } = useContext(AppContext);
-  const itemSplit =
-    searchText !== ""
-      ? item.body.slice(0, 150).split(searchText)
-      : item.body.slice(0, 150);
+  const { searchText, chosenEmail, setChosenEmail, resize, setResize } =
+    useContext(AppContext);
 
   return (
     <ListItemMoved
@@ -45,25 +59,6 @@ const EmailPreview = ({ item }) => {
         setResize(true);
       }}
     >
-      {/* <div className="name">{item.from.split("@")[0]}</div>
-      <div id="email-body">
-        {Array.isArray(itemSplit) ? (
-          itemSplit.map((item, index) => {
-            if (index === itemSplit.length - 1) return <span>{item}</span>;
-            else
-              return (
-                <span>
-                  {item}
-                  <SearchTerm>{searchText}</SearchTerm>
-                </span>
-              );
-          })
-        ) : (
-          <span>{itemSplit}</span>
-        )}
-      </div>
-      <div> {moment(item.date).format("LL")}</div> */}
-
       <ListItemText
         primary={item.from.split("@")[0]}
         secondary={
@@ -76,20 +71,20 @@ const EmailPreview = ({ item }) => {
             >
               {item.subject}
             </Typography>
-            {Array.isArray(itemSplit) ? (
-              itemSplit.map((item, index) => {
-                if (index === itemSplit.length - 1) return <span>{item}</span>;
-                else
-                  return (
-                    <span>
-                      {item}
-                      <SearchTerm>{searchText}</SearchTerm>
-                    </span>
-                  );
-              })
-            ) : (
-              <span>{itemSplit}</span>
-            )}
+
+            <div
+              dangerouslySetInnerHTML={{
+                __html: applyHighlight(searchText, item.body.slice(0, 150)),
+              }}
+            ></div>
+            <Typography
+              component="span"
+              variant="body2"
+              className={classes.inline}
+              color="textPrimary"
+            >
+              {moment(item.date).format("LL")}
+            </Typography>
           </React.Fragment>
         }
       />

@@ -65,7 +65,7 @@ const EmailPreview = ({ item }) => {
           <React.Fragment>
             <Typography
               component="span"
-              variant="body2"
+              variant="body1"
               className={classes.inline}
               color="textPrimary"
             >
@@ -79,7 +79,7 @@ const EmailPreview = ({ item }) => {
             ></div>
             <Typography
               component="span"
-              variant="body2"
+              variant="body1"
               className={classes.inline}
               color="textPrimary"
             >

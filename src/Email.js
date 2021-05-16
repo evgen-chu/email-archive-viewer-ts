@@ -1,18 +1,27 @@
 import React, { useContext } from "react";
 import { useParams } from "react-router";
 import { getEmailById } from "./jsonStorage";
-import styled from "styled-components";
+import styled, { ThemeProvider } from "styled-components";
 import { Link } from "react-router-dom";
 import { AppContext } from "./AppContext";
 import { VscChromeClose } from "react-icons/vsc";
 import { applyHighlight } from "./EmailPreview";
+import Typography from "@material-ui/core/Typography";
+import { createMuiTheme } from "@material-ui/core/styles";
+//import ThemeProvider from "@material-ui/core/ThemeProvider";
+import moment from "moment";
+
+const theme = createMuiTheme({
+  typography: {
+    fontSize: 20,
+  },
+});
 const Email = () => {
   const { chosenEmail, setChosenEmail, setResize, searchText } =
     useContext(AppContext);
 
   return (
     <Wrapper alignLeft={chosenEmail === null}>
-      {/* <Link to="/">Back to archive</Link> */}
       <ExitButton
         onClick={(e) => {
           setChosenEmail(null);
@@ -21,17 +30,21 @@ const Email = () => {
       >
         <VscChromeClose />
       </ExitButton>
-      <div>From: {chosenEmail.from}</div>
-      <div> {chosenEmail.date}</div>
-      <div>To: {chosenEmail.to}</div>
-      <div>CC: {chosenEmail.cc}</div>
-      <div>BCC: {chosenEmail.bcc}</div>
-      <div>Subject: {chosenEmail.subject}</div>
-      <div
-        dangerouslySetInnerHTML={{
-          __html: applyHighlight(searchText, chosenEmail.body),
-        }}
-      ></div>
+      <ThemeProvider theme={theme}>
+        <Typography component="span" variant="body1" color="textPrimary">
+          From: {chosenEmail.from}
+          {moment(chosenEmail.date).format("LL")}
+          <div>To: {chosenEmail.to}</div>
+          {chosenEmail.cc.length > 0 && <div>CC: {chosenEmail.cc}</div>}
+          {chosenEmail.bcc.length > 0 && <div>BCC: {chosenEmail.bcc}</div>}
+          Subject: {chosenEmail.subject}
+          <div
+            dangerouslySetInnerHTML={{
+              __html: applyHighlight(searchText, chosenEmail.body),
+            }}
+          ></div>
+        </Typography>
+      </ThemeProvider>
     </Wrapper>
   );
 };
@@ -45,7 +58,9 @@ const Wrapper = styled.div`
   flex-direction: column;
   position: relative;
   border-left: 1px solid rgba(0, 0, 0, 0.5);
-  padding: 20px;
+  padding-top: 100px;
+  padding-left: 20px;
+  padding-right: 20px;
 `;
 const ExitButton = styled.button`
   background-color: white;
@@ -58,10 +73,6 @@ const ExitButton = styled.button`
   &:hover {
     border: 1px gray solid;
   }
-`;
-const SearchTerm = styled.span`
-  font-weight: bold;
-  background-color: yellow;
 `;
 
 export default Email;

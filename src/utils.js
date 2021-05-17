@@ -15,5 +15,3 @@ const createEmailsId = () => {
     console.log("complete");
   });
 };
-
-//createEmailsId();

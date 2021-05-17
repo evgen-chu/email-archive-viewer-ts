@@ -12,10 +12,9 @@ const EmailGrid = ({ items }) => {
     <List style={{ width: resize ? "60vw" : "100vw" }}>
       {items.map((item) => {
         return (
-          <>
-            <EmailPreview key={uuidv4()} item={item} />{" "}
-            <Divider variant="middle" />
-          </>
+          <div>
+            <EmailPreview key={uuidv4()} item={item} /> <Divider />
+          </div>
         );
       })}
     </List>

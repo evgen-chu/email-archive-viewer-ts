@@ -49,6 +49,8 @@ const PageButtons = () => {
         count={Math.round(getEmailsLength(sender, receiver, searchText) / 10)}
         page={page}
         onChange={handleChange}
+        variant="outlined"
+        color="primary"
       />
     </Wrapper>
   );

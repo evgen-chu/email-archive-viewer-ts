@@ -34,6 +34,7 @@ const BrowsePage = () => {
           {items && <EmailGrid items={items} />}
           <PageButtons />
         </div>
+        <Divider orientation="vertical" flexItem />
         {chosenEmail && <Email />}
       </EmailWrapper>
       <Divider variant="middle" />
@@ -43,7 +44,6 @@ const BrowsePage = () => {
 
 const Wrapper = styled.div`
   width: 100%;
-  //width: ${(props) => (props.resize ? "50vw" : "100vw")};
   position: relative;
   z-index: 1;
   display: flex;

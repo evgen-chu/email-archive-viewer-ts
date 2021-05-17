@@ -6,11 +6,9 @@ const ActionBar = () => {
   return (
     <Wrapper>
       <div>
-        {/* <label>Sender:</label> */}
         <Filter type="sender" />
       </div>
       <div>
-        {/* <label>Receiver:</label> */}
         <Filter type="receiver" />
       </div>
 
@@ -26,6 +24,7 @@ const Wrapper = styled.div`
   align-items: center;
   margin: auto;
   margin-top: 20px;
+  margin-bottom: 30px;
   div {
     display: flex;
   }
@@ -36,6 +35,7 @@ const Wrapper = styled.div`
     margin: auto;
     margin-right: 10px;
   }
+  z-index: 3;
 `;
 
 export default ActionBar;

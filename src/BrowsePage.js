@@ -6,6 +6,7 @@ import PageButtons from "./PageButtons";
 import { AppContext } from "./AppContext";
 import styled from "styled-components";
 import Email from "./Email";
+import Divider from "@material-ui/core/Divider";
 
 const BrowsePage = () => {
   const {
@@ -26,12 +27,15 @@ const BrowsePage = () => {
 
   return (
     <Wrapper resize={false}>
-      <div>
-        <ActionBar sender={sender} setSenders={setSender} />
-        {items && <EmailGrid items={items} />}
-        <PageButtons />
-      </div>
-      {chosenEmail && <Email />}
+      <ActionBar sender={sender} setSenders={setSender} />
+      <Divider variant="middle" />
+      <EmailWrapper>
+        <div>
+          {items && <EmailGrid items={items} />}
+          <PageButtons />
+        </div>
+        {chosenEmail && <Email />}
+      </EmailWrapper>
     </Wrapper>
   );
 };
@@ -42,7 +46,11 @@ const Wrapper = styled.div`
   position: relative;
   z-index: 1;
   display: flex;
+  flex-direction: column;
   justify-content: flex-start;
+`;
+const EmailWrapper = styled.div`
+  display: flex;
 `;
 
 export default BrowsePage;

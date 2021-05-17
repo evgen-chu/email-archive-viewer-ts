@@ -28,6 +28,7 @@ const Wrapper = styled.div`
   position: relative;
   z-index: 1;
   margin-top: 40px;
+  border-top: 1px solid black;
 `;
 
 export default EmailGrid;

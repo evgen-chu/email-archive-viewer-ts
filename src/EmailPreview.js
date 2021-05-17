@@ -74,7 +74,7 @@ const EmailPreview = ({ item }) => {
 
             <div
               dangerouslySetInnerHTML={{
-                __html: applyHighlight(searchText, item.body.slice(0, 150)),
+                __html: applyHighlight(searchText, item.body.slice(0, 140)),
               }}
             ></div>
             <Typography

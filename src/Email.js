@@ -8,6 +8,7 @@ import { VscChromeClose } from "react-icons/vsc";
 import { applyHighlight } from "./EmailPreview";
 import Typography from "@material-ui/core/Typography";
 import { createMuiTheme } from "@material-ui/core/styles";
+import Divider from "@material-ui/core/Divider";
 //import ThemeProvider from "@material-ui/core/ThemeProvider";
 import moment from "moment";
 
@@ -22,6 +23,7 @@ const Email = () => {
 
   return (
     <Wrapper alignLeft={chosenEmail === null}>
+      {/* <Divider orientation="vertical" flexItem /> */}
       <ExitButton
         onClick={(e) => {
           setChosenEmail(null);
@@ -50,14 +52,16 @@ const Email = () => {
 };
 
 const Wrapper = styled.div`
+  z-index: 1;
   width: 40vw;
-  height: 100vh;
+  height: 60vh;
   margin: auto;
-  background-color: #f8f9fa;
+  //background-color: #f8f9fa;
   display: flex;
   flex-direction: column;
   position: relative;
   border-left: 1px solid rgba(0, 0, 0, 0.5);
+
   padding-top: 100px;
   padding-left: 20px;
   padding-right: 20px;

@@ -4,7 +4,7 @@ const emails = require("./assets/emailWithID.json");
 export const getEmailById = (id) => {
   return emails.filter((item) => item.id === id)[0];
 };
-export const getEmails = (page, limit, sender, receiver, searchText) => {
+export const getEmails = (sender, receiver, searchText) => {
   let result;
   if (sender) {
     let temp = emails.filter((item) => item.from === sender);
@@ -22,17 +22,32 @@ export const getEmails = (page, limit, sender, receiver, searchText) => {
     let temp = search(result, searchText);
     result = temp;
   }
+  return result;
+};
+
+export const getPaginatedEmails = (
+  page,
+  limit,
+  sender,
+  receiver,
+  searchText
+) => {
+  let result = getEmails(sender, receiver, searchText);
   const startInd = (page - 1) * limit;
   const endInd = page * limit - 1;
   let paginatedResult = result.slice(startInd, endInd);
   return paginatedResult;
 };
 
+export const getEmailsLength = (sender, receiver, searchText) => {
+  let result = getEmails(sender, receiver, searchText);
+  return result.length;
+};
+
 export const search = (array, searchTerm) => {
   let result = array.filter((item) => {
     return item.subject.includes(searchTerm) || item.body.includes(searchTerm);
   });
-  //console.log(result);
   return result;
 };
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import EmailGrid from "./EmailGrid";
-import { getEmails, getAllSenders } from "./jsonStorage";
+import { getPaginatedEmails, getAllSenders } from "./jsonStorage";
 import ActionBar from "./ActionBar";
 import PageButtons from "./PageButtons";
 import { AppContext } from "./AppContext";
@@ -22,7 +22,7 @@ const BrowsePage = () => {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    setItems(getEmails(page, 10, sender, receiver, searchText));
+    setItems(getPaginatedEmails(page, 10, sender, receiver, searchText));
   }, [page, sender, receiver, searchText, chosenEmail]);
 
   return (
@@ -34,15 +34,16 @@ const BrowsePage = () => {
           {items && <EmailGrid items={items} />}
           <PageButtons />
         </div>
+        <Divider orientation="vertical" flexItem />
         {chosenEmail && <Email />}
       </EmailWrapper>
+      <Divider variant="middle" />
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
   width: 100%;
-  //width: ${(props) => (props.resize ? "50vw" : "100vw")};
   position: relative;
   z-index: 1;
   display: flex;

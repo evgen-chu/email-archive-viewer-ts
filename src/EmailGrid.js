@@ -12,10 +12,9 @@ const EmailGrid = ({ items }) => {
     <List style={{ width: resize ? "60vw" : "100vw" }}>
       {items.map((item) => {
         return (
-          <>
-            <EmailPreview key={uuidv4()} item={item} />{" "}
-            <Divider variant="middle" />
-          </>
+          <div>
+            <EmailPreview key={uuidv4()} item={item} /> <Divider />
+          </div>
         );
       })}
     </List>
@@ -23,7 +22,6 @@ const EmailGrid = ({ items }) => {
 };
 
 const Wrapper = styled.div`
-  //width: 100%;
   width: ${(props) => (props.resize ? "50vw" : "100vw")};
   position: relative;
   z-index: 1;

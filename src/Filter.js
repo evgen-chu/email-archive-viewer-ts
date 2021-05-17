@@ -20,7 +20,6 @@ const Filter = ({ type }) => {
   } = useContext(AppContext);
   const [searchTerm, setSearchTerm] = useState("");
   const [suggestionsVisibility, setSuggestionsVisibility] = useState(false);
-  // let isSender = type === "sender";
 
   useEffect(() => {
     if (searchTerm.length > 0 && type === "sender") {
@@ -59,18 +58,6 @@ const Filter = ({ type }) => {
         />
       </FormControl>
       {((sender && type === "sender") || (receiver && type === "receiver")) && (
-        // <SenderWrapper>
-        //   <Sender>{type === "sender" ? sender : receiver}</Sender>
-        //   <button
-        //     onClick={(e) => {
-        //       if (type === "sender") setSender(null);
-        //       if (type === "receiver") setReceiver(null);
-        //       setPage(1);
-        //     }}
-        //   >
-        //     X
-        //   </button>
-        // </SenderWrapper>
         <Chip
           variant="outlined"
           size="small"
@@ -107,10 +94,6 @@ const Wrapper = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  // input {
-  //   height: 25px;
-  //   border-radius: 4px;
-  // }
 `;
 const Suggestions = styled.div`
   background-color: #fff;
@@ -120,13 +103,6 @@ const Suggestions = styled.div`
   z-index: 5;
   top: 20px;
   left: -20px;
-`;
-const Sender = styled.div`
-  border: 1px solid green;
-  border-radius: 5px;
-`;
-const SenderWrapper = styled.div`
-  display: flex;
 `;
 
 export default Filter;

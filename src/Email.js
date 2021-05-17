@@ -1,15 +1,10 @@
 import React, { useContext } from "react";
-import { useParams } from "react-router";
-import { getEmailById } from "./jsonStorage";
 import styled, { ThemeProvider } from "styled-components";
-import { Link } from "react-router-dom";
 import { AppContext } from "./AppContext";
 import { VscChromeClose } from "react-icons/vsc";
 import { applyHighlight } from "./EmailPreview";
 import Typography from "@material-ui/core/Typography";
 import { createMuiTheme } from "@material-ui/core/styles";
-import Divider from "@material-ui/core/Divider";
-//import ThemeProvider from "@material-ui/core/ThemeProvider";
 import moment from "moment";
 
 const theme = createMuiTheme({
@@ -23,7 +18,6 @@ const Email = () => {
 
   return (
     <Wrapper alignLeft={chosenEmail === null}>
-      {/* <Divider orientation="vertical" flexItem /> */}
       <ExitButton
         onClick={(e) => {
           setChosenEmail(null);

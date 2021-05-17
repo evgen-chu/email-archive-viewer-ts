@@ -1,11 +1,8 @@
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 import moment from "moment";
 import { AppContext } from "./AppContext";
-
 import ListItem from "@material-ui/core/ListItem";
-
 import Typography from "@material-ui/core/Typography";
 import ListItemText from "@material-ui/core/ListItemText";
 import { makeStyles } from "@material-ui/core/styles";

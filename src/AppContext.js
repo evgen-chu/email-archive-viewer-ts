@@ -1,5 +1,4 @@
 import React, { createContext, useEffect, useState } from "react";
-import { getEmails } from "./jsonStorage";
 
 export const AppContext = createContext(null);
 

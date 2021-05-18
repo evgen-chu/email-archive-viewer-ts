@@ -3,10 +3,11 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Email from "./Email";
 import GlobalStyles from "./GlobalStyles";
+type AppProps = { message: string };
 
-function App() {
+const App: React.FC = () => {
   return (
-    <div>
+    <React.Fragment>
       <GlobalStyles />
       <Router>
         <Route exact path="/">
@@ -16,8 +17,8 @@ function App() {
           <Email />
         </Route>
       </Router>
-    </div>
+    </React.Fragment>
   );
-}
+};
 
 export default App;

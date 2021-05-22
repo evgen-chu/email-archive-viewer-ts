@@ -1,24 +1,28 @@
 //const emails = require("./assets/email.json");
-const emails = require("./assets/emailWithID.json");
+const emails: any = require("./assets/emailWithID.json");
 //get paginated result
-export const getEmailById = (id) => {
-  return emails.filter((item) => item.id === id)[0];
+export const getEmailById = (id: number) => {
+  return emails.filter((item: any) => item.id === id)[0];
 };
-export const getEmails = (sender, receiver, searchText) => {
+export const getEmails = (
+  sender?: string,
+  receiver?: string,
+  searchText?: string
+) => {
   let result;
   if (sender) {
-    let temp = emails.filter((item) => item.from === sender);
+    let temp = emails.filter((item: any) => item.from === sender);
     result = temp;
   } else result = emails;
 
   if (receiver) {
     console.log(receiver);
-    let temp = result.filter((item) => {
+    let temp = result.filter((item: any) => {
       return item.to.includes(receiver);
     });
     result = temp;
   }
-  if (searchText.length > 2) {
+  if (searchText && searchText.length > 2) {
     let temp = search(result, searchText);
     result = temp;
   }
@@ -26,11 +30,11 @@ export const getEmails = (sender, receiver, searchText) => {
 };
 
 export const getPaginatedEmails = (
-  page,
-  limit,
-  sender,
-  receiver,
-  searchText
+  page: number,
+  limit: number,
+  sender?: string,
+  receiver?: string,
+  searchText?: string
 ) => {
   let result = getEmails(sender, receiver, searchText);
   const startInd = (page - 1) * limit;
@@ -39,13 +43,17 @@ export const getPaginatedEmails = (
   return paginatedResult;
 };
 
-export const getEmailsLength = (sender, receiver, searchText) => {
+export const getEmailsLength = (
+  sender?: string,
+  receiver?: string,
+  searchText?: string
+) => {
   let result = getEmails(sender, receiver, searchText);
   return result.length;
 };
 
-export const search = (array, searchTerm) => {
-  let result = array.filter((item) => {
+export const search = (array: any, searchTerm?: string) => {
+  let result = array.filter((item: any) => {
     return item.subject.includes(searchTerm) || item.body.includes(searchTerm);
   });
   return result;
@@ -54,36 +62,32 @@ export const search = (array, searchTerm) => {
 //search("analyst");
 
 export const getAllSenders = () => {
-  let senders = [...new Set(emails.map((item) => item.from))];
+  let senders = new Set(emails.map((item: any) => item.from));
   return senders;
 };
 
 //getAllSenders();
 
-export const searchForSender = (searchTerm) => {
-  let senders = [...new Set(emails.map((item) => item.from))];
-  let result = senders.filter((item) => {
-    return item.includes(searchTerm);
-  });
-  return result;
-};
+export const searchForSender = (searchTerm: string): string =>
+  emails
+    .map((item: any) => item.from)
+    .filter((item: any) => item.includes(searchTerm));
 
-export const searchForReceiver = (searchTerm) => {
-  let receiversSet = new Set();
-  emails.forEach((item) => {
-    item.to.forEach((itemTo) => {
+export const searchForReceiver = (searchTerm: string) => {
+  let receiversSet = new Set<any>();
+  emails.forEach((item: any) => {
+    item.to.forEach((itemTo: any) => {
       receiversSet.add(itemTo);
     });
   });
   console.log("ReceiversSet: ", receiversSet);
-  let receivers = [...receiversSet];
-  let result = receivers.filter((item) => {
+  let result = Array.from(receiversSet).filter((item) => {
     return item.includes(searchTerm);
   });
   return result;
 };
 
-export const highlight = (searchStr, str) => {
+export const highlight = (searchStr: string, str: string) => {
   let searchStrLen = searchStr.length;
   if (searchStrLen === 0) {
     return [];

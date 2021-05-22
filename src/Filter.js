@@ -7,7 +7,7 @@ import OutlinedInput from "@material-ui/core/OutlinedInput";
 import FormControl from "@material-ui/core/FormControl";
 import Chip from "@material-ui/core/Chip";
 
-const Filter = ({ type }) => {
+const Filter = (type) => {
   const {
     sender,
     setSender,

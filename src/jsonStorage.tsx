@@ -68,10 +68,13 @@ export const getAllSenders = () => {
 
 //getAllSenders();
 
-export const searchForSender = (searchTerm: string): string =>
-  emails
+export const searchForSender = (searchTerm: string): string[] => {
+  let results = emails
     .map((item: any) => item.from)
     .filter((item: any) => item.includes(searchTerm));
+  console.log(results);
+  return Array.from(new Set<string>(results).values());
+};
 
 export const searchForReceiver = (searchTerm: string) => {
   let receiversSet = new Set<any>();

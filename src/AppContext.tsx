@@ -11,7 +11,7 @@ interface IProps {
   children: ReactNode;
 }
 
-type ReactSample = {
+export type ReactSample = {
   sender: string | null;
   setSender: Dispatch<SetStateAction<string | null>>;
   receiver: string | null;

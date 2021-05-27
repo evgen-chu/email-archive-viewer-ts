@@ -9,16 +9,8 @@ import Email from "./Email";
 import Divider from "@material-ui/core/Divider";
 
 const BrowsePage = () => {
-  const {
-    sender,
-    setSender,
-    page,
-    receiver,
-    searchText,
-    chosenEmail,
-    setChosenEmail,
-    resize,
-  } = useContext(AppContext);
+  const { sender, page, receiver, searchText, chosenEmail } =
+    useContext(AppContext);
   const [items, setItems] = useState([]);
 
   useEffect(() => {
@@ -26,8 +18,8 @@ const BrowsePage = () => {
   }, [page, sender, receiver, searchText, chosenEmail]);
 
   return (
-    <Wrapper resize={false}>
-      <ActionBar sender={sender} setSenders={setSender} />
+    <Wrapper>
+      <ActionBar />
       <Divider variant="middle" />
       <EmailWrapper>
         <div>

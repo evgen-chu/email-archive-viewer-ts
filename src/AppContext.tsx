@@ -32,7 +32,7 @@ export const AppContext = createContext<Partial<ReactSample>>({});
 const AppProvider = ({ children }: IProps): JSX.Element => {
   const [sender, setSender] = useState<string | null>(null);
   const [receiver, setReceiver] = useState<string | null>(null);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState<number>(1);
   const [searchResult, setSearchResult] = useState<string[]>([]);
   const [searchText, setSearchText] = useState<string | null>("");
   const [chosenEmail, setChosenEmail] = useState<string | null>(null);

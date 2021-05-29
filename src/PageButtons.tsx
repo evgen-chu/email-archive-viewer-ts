@@ -4,6 +4,8 @@ import { getPaginatedEmails, getEmailsLength } from "./jsonStorage";
 import { AppContext } from "./AppContext";
 import { makeStyles } from "@material-ui/core/styles";
 import Pagination from "@material-ui/lab/Pagination";
+
+import { ReactSample } from "./AppContext";
 const useStyles = makeStyles((theme) => ({
   root: {
     "& > *": {
@@ -14,15 +16,21 @@ const useStyles = makeStyles((theme) => ({
 const PageButtons = () => {
   const classes = useStyles();
   const { page, setPage, sender, receiver, searchText } =
-    useContext(AppContext);
+    useContext<Partial<ReactSample>>(AppContext);
   const [nextPage, setNextPage] = useState(true);
   useEffect(() => {
-    let items = getPaginatedEmails(page + 1, 20, sender, receiver, searchText);
+    let items = getPaginatedEmails(
+      page ? page + 1 : 1,
+      20,
+      sender ? sender : "",
+      receiver ? receiver : "",
+      searchText ? searchText : ""
+    );
     items.length === 0 ? setNextPage(false) : setNextPage(true);
   }, [page, sender, receiver]);
-  const handleChange = (e, value) => {
+  const handleChange = (e: any, value: any) => {
     console.log(value);
-    setPage(value);
+    setPage && setPage(value);
   };
   return (
     <Wrapper className={classes.root}>
@@ -46,7 +54,13 @@ const PageButtons = () => {
         &gt;
       </button> */}
       <Pagination
-        count={Math.round(getEmailsLength(sender, receiver, searchText) / 10)}
+        count={Math.round(
+          getEmailsLength(
+            sender ? sender : "",
+            receiver ? receiver : "",
+            searchText ? searchText : ""
+          ) / 10
+        )}
         page={page}
         onChange={handleChange}
         variant="outlined"

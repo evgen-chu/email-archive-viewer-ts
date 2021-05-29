@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const applyHighlight = (term, text) => {
+export const applyHighlight = (term: string, text: string) => {
   let indices = highlight(term, text);
   console.log(indices);
   let tagsLength = 0;
@@ -41,7 +41,7 @@ export const applyHighlight = (term, text) => {
   return text;
 };
 
-const EmailPreview = ({ item }) => {
+const EmailPreview = ({ item }: any) => {
   const classes = useStyles();
   const { searchText, chosenEmail, setChosenEmail, resize, setResize } =
     useContext(AppContext);
@@ -49,12 +49,13 @@ const EmailPreview = ({ item }) => {
   return (
     <ListItemMoved
       alignItems="flex-start"
-      resize={false}
+      //resize={false}
       style={{ width: resize ? "60vw" : "100vw" }}
       onClick={(e) => {
-        setChosenEmail(item);
-        setResize(true);
+        setChosenEmail && setChosenEmail(item);
+        setResize && setResize(true);
       }}
+      button={true}
     >
       <ListItemText
         primary={item.from.split("@")[0]}
@@ -71,7 +72,10 @@ const EmailPreview = ({ item }) => {
 
             <div
               dangerouslySetInnerHTML={{
-                __html: applyHighlight(searchText, item.body.slice(0, 140)),
+                __html: applyHighlight(
+                  searchText ? searchText : "",
+                  item.body.slice(0, 140)
+                ),
               }}
             ></div>
             <Typography
@@ -88,28 +92,28 @@ const EmailPreview = ({ item }) => {
     </ListItemMoved>
   );
 };
+//  width: ${(props) => (props.resize ? "50vw" : "100vw")};
+// const Wrapper = styled.button`
+//   //width: 100vw;
 
-const Wrapper = styled.button`
-  //width: 100vw;
-  width: ${(props) => (props.resize ? "50vw" : "100vw")};
-  margin: auto;
-  display: flex;
-  justify-content: space-between;
-  text-decoration: none;
-  color: black;
-  height: 40px;
-  align-items: center;
-  border: 1px solid rgba(0, 0, 0, 0.5);
-  font-size: 12pt;
-  background-color: #f8f9fa;
-  border: none;
-  .name {
-    margin-right: 40px;
-  }
-  &:hover {
-    background-color: #dee2e6;
-  }
-`;
+//   margin: auto;
+//   display: flex;
+//   justify-content: space-between;
+//   text-decoration: none;
+//   color: black;
+//   height: 40px;
+//   align-items: center;
+//   border: 1px solid rgba(0, 0, 0, 0.5);
+//   font-size: 12pt;
+//   background-color: #f8f9fa;
+//   border: none;
+//   .name {
+//     margin-right: 40px;
+//   }
+//   &:hover {
+//     background-color: #dee2e6;
+//   }
+// `;
 const SearchTerm = styled.span`
   font-weight: bold;
   background-color: yellow;

@@ -6,11 +6,10 @@ import { AppContext } from "./AppContext";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 
-const EmailGrid = ({ items }) => {
-  const { resize } = useContext(AppContext);
+const EmailGrid = ({ items }: any) => {
   return (
-    <List style={{ width: resize ? "60vw" : "100vw" }}>
-      {items.map((item) => {
+    <List>
+      {items.map((item: any) => {
         return (
           <div>
             <EmailPreview key={uuidv4()} item={item} /> <Divider />
@@ -20,9 +19,7 @@ const EmailGrid = ({ items }) => {
     </List>
   );
 };
-
 const Wrapper = styled.div`
-  width: ${(props) => (props.resize ? "50vw" : "100vw")};
   position: relative;
   z-index: 1;
   margin-top: 40px;

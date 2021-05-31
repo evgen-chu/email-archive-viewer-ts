@@ -49,7 +49,6 @@ const EmailPreview = ({ item }: any) => {
   return (
     <ListItemMoved
       alignItems="flex-start"
-      //resize={false}
       style={{ width: resize ? "60vw" : "100vw" }}
       onClick={(e) => {
         setChosenEmail && setChosenEmail(item);
@@ -92,28 +91,7 @@ const EmailPreview = ({ item }: any) => {
     </ListItemMoved>
   );
 };
-//  width: ${(props) => (props.resize ? "50vw" : "100vw")};
-// const Wrapper = styled.button`
-//   //width: 100vw;
 
-//   margin: auto;
-//   display: flex;
-//   justify-content: space-between;
-//   text-decoration: none;
-//   color: black;
-//   height: 40px;
-//   align-items: center;
-//   border: 1px solid rgba(0, 0, 0, 0.5);
-//   font-size: 12pt;
-//   background-color: #f8f9fa;
-//   border: none;
-//   .name {
-//     margin-right: 40px;
-//   }
-//   &:hover {
-//     background-color: #dee2e6;
-//   }
-// `;
 const SearchTerm = styled.span`
   font-weight: bold;
   background-color: yellow;

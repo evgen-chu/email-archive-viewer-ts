@@ -7,14 +7,23 @@ import { AppContext } from "./AppContext";
 import styled from "styled-components";
 import Email from "./Email";
 import Divider from "@material-ui/core/Divider";
+import { ReactSample } from "./AppContext";
 
 const BrowsePage = () => {
   const { sender, page, receiver, searchText, chosenEmail } =
-    useContext(AppContext);
+    useContext<Partial<ReactSample>>(AppContext);
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    setItems(getPaginatedEmails(page, 10, sender, receiver, searchText));
+    setItems(
+      getPaginatedEmails(
+        page ? page : 1,
+        10,
+        sender ? sender : "",
+        receiver ? receiver : "",
+        searchText ? searchText : ""
+      )
+    );
   }, [page, sender, receiver, searchText, chosenEmail]);
 
   return (

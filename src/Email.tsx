@@ -6,6 +6,7 @@ import { applyHighlight } from "./EmailPreview";
 import Typography from "@material-ui/core/Typography";
 import { createMuiTheme } from "@material-ui/core/styles";
 import moment from "moment";
+import { ReactSample } from "./AppContext";
 
 const theme = createMuiTheme({
   typography: {
@@ -14,29 +15,36 @@ const theme = createMuiTheme({
 });
 const Email = () => {
   const { chosenEmail, setChosenEmail, setResize, searchText } =
-    useContext(AppContext);
+    useContext<Partial<ReactSample>>(AppContext);
 
   return (
-    <Wrapper alignLeft={chosenEmail === null}>
+    <Wrapper>
       <ExitButton
         onClick={(e) => {
-          setChosenEmail(null);
-          setResize(false);
+          setChosenEmail && setChosenEmail(null);
+          setResize && setResize(false);
         }}
       >
         <VscChromeClose />
       </ExitButton>
       <ThemeProvider theme={theme}>
         <Typography component="span" variant="body1" color="textPrimary">
-          From: {chosenEmail.from}
-          {moment(chosenEmail.date).format("LL")}
-          <div>To: {chosenEmail.to}</div>
-          {chosenEmail.cc.length > 0 && <div>CC: {chosenEmail.cc}</div>}
-          {chosenEmail.bcc.length > 0 && <div>BCC: {chosenEmail.bcc}</div>}
-          Subject: {chosenEmail.subject}
+          From: {chosenEmail && chosenEmail.from}
+          {moment(chosenEmail && chosenEmail.date).format("LL")}
+          <div>To: {chosenEmail && chosenEmail.to}</div>
+          {chosenEmail && chosenEmail.cc.length > 0 && (
+            <div>CC: {chosenEmail.cc}</div>
+          )}
+          {chosenEmail && chosenEmail.bcc.length > 0 && (
+            <div>BCC: {chosenEmail && chosenEmail.bcc}</div>
+          )}
+          Subject: {chosenEmail && chosenEmail.subject}
           <div
             dangerouslySetInnerHTML={{
-              __html: applyHighlight(searchText, chosenEmail.body),
+              __html: applyHighlight(
+                searchText ? searchText : "",
+                chosenEmail ? chosenEmail.body : ""
+              ),
             }}
           ></div>
         </Typography>
@@ -50,11 +58,9 @@ const Wrapper = styled.div`
   width: 40vw;
   height: 60vh;
   margin: auto;
-  //background-color: #f8f9fa;
   display: flex;
   flex-direction: column;
   position: relative;
-  // border-left: 1px solid rgba(0, 0, 0, 0.5);
 
   padding-top: 100px;
   padding-left: 20px;
